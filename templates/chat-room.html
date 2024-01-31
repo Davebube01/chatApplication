@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/favicon_d.ico">
+    <title>Chat Room</title>
+</head>
+
+<body>
+    <h1>Welcome to room {{ room }}, {{username}}</h1>
+
+    <div id="messages">
+        <ul id="chat-messages"></ul>
+    </div>
+
+    <form id="form-init">
+        <input type="text" id="message_input" placeholder="Enter your messages here"><br>
+        <button type="submit" id="send">Send</button>
+    </form>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
+        integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        });
+        // Connect to Socket.IO server
+        const socket = io({ autoConnect: false })
+        socket.connect();
+
+        // alerting on backend who connected into the room
+        socket.on("connect", function () {
+            socket.emit("join_room_event", { 'username': '{{ username }}', 'room': '{{ room }}' });
+        })
+
+        // This is to display in the console on browser as well as the chat.html page alerting others of who has logged into the chat room
+        socket.on('join_room_announcement', function (data) {
+            console.log(data);
+            const newEntry = document.createElement('div');
+            newEntry.innerHTML = `<b>${data.username}</b> has joined the room`;
+            document.getElementById('messages').appendChild(newEntry)
+        })
+
+        // This is for messages to be displayed when recieved
+        socket.on('reciever_message', function (data) {
+            console.log(data);
+            
+            // Try 1, for one on one conversation
+
+            // let ul = document.getElementById("chat-messages");
+            // let li = document.createElement("li");
+            // li.appendChild(document.createTextNode(`${data.username}: ${data.message}`))
+            // ul.appendChild(li)
+            // ul.scrolltop = ul.scrollHeight;
+
+            // Try 2, For group chat, to be modified later still. 
+
+            const newEntry = document.createElement('div');
+            newEntry.innerHTML = `<b>${data.username}</b>: ${data.message} `;
+            document.getElementById('messages').appendChild(newEntry)
+        })
+
+        // This is for message input on the form transported then to the backend
+        document.getElementById("form-init").onsubmit = function (event) {  
+            event.preventDefault();
+            let message = document.getElementById('message_input').value;
+            if (message.length) {
+                socket.emit("new_message", {
+                    username: "{{ username }}",
+                    room: "{{ room }}",
+                    message: message
+                });
+                // This is to return the message input box to an empty string 
+                document.getElementById('message_input').value = "";
+            }
+
+        }
+    </script>
+</body>
+
+</html>

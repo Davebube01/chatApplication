@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="/assets/favicon_d.ico">
+</head>
+
+<body>
+
+    <h1>Sign Up</h1>
+    <form action="/signup" method="post">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" placeholder="Username" name="username"><br>
+            <label for="email">Email</label>
+            <input type="text" placeholder="email" name="email"><br>
+            <label for="password">Password</label>
+            <input type="text" placeholder="password" name="password"><br>
+            <button type="submit">Submit</button><br>
+
+            <b> {{ message}} </b>
+        </div>
+    </form>
+    <script src="/static/scripts.js"></script>
+</body>
+
+</html>

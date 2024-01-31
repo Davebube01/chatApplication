@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/favicon_d.ico">
+    <!-- <link rel="stylesheet" href="/chatapp/static/styles.css"> -->
+    <title>Chat Room Login</title>
+    <!-- Link Socket.IO library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
+        integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <h1>Chat Room Login</h1>
+    <h3>Hi {% if current_user.is_authenticated %}{{ current_user.username }}{% else %} Guest! {% endif %}</h3>
+    <form action="chat_login" method="post">
+        <div>
+            <label for="Username">Username</label>
+            <input type="text" placeholder="Username" name="username" id="Username"><br>
+            <label for="room_Id">Room Id</label>
+            <input type="text" placeholder="Room Id" name="roomId" id="room_Id"><br>
+            <button type="submit" id="join-btn">Log In</button>
+        </div>
+    </form>
+
+
+    <script src="/chatapp/static/scripts.js"></script>
+</html>
