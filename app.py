@@ -48,6 +48,13 @@ def signup():
             message = 'Username already exists'
     return render_template ("signup.html", message = message)
 
+
+# To save or create new room
+@app.route("/new_room", methods=['GET', 'POST'])
+def create_room():
+    if request.methods == "POST":
+        pass
+
 # index page
 @app.route("/index")
 @login_required
