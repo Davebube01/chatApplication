@@ -9,7 +9,6 @@ from user import User
 client = MongoClient('mongodb+srv://test:test@chatappdemo1.9zdc5na.mongodb.net/?retryWrites=true&w=majority')
 
 
-
 # This is to connect to the database and then its collection on mongDB atlas
 # print(client.list_database_names())
 db = client.chatDB   # chatDB being the database name we will be using which was printed in the statement above
